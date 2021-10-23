@@ -1,18 +1,31 @@
-FROM golang:alpine AS gobuilder
+FROM nginxinc/nginx-unprivileged:stable-alpine as base
 
-WORKDIR /go/src/static-web
-RUN addgroup -S appgroup && adduser -S appuser -G appgroup
-RUN apk add --update gcc musl-dev
+# https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+ARG TIME_ZONE=UTC
 
-COPY . /go/src/static-web
-RUN CGO_ENABLED=0 go build --tags "linux"
+USER root
+RUN mkdir -p /opt/var/cache/nginx && \
+    cp -aL --parents /usr/lib/nginx /opt && \
+    cp -a --parents /usr/share/nginx /opt && \
+    cp -a --parents /var/log/nginx /opt && \
+    cp -aL --parents /var/run /opt && \
+    cp -a --parents /etc/nginx /opt && \
+    cp -a --parents /etc/passwd /opt && \
+    cp -a --parents /etc/group /opt && \
+    cp -a --parents /usr/sbin/nginx /opt && \
+    cp -a --parents /usr/sbin/nginx-debug /opt && \
+    cp -a --parents /lib/libcrypto.so.* /opt && \
+    cp -a --parents /lib/libz.* /opt && \
+    cp -a --parents /lib/libc.* /opt && \
+    cp -a --parents /lib/ld-musl-x86_64.so.* /opt && \
+    cp -a --parents /lib/libssl.so.* /opt && \
+    cp -a --parents /usr/lib/lib* /opt && \
+    cp /usr/share/zoneinfo/$TIME_ZONE /opt/etc/localtime
 
+FROM gcr.io/distroless/static:nonroot
 
-FROM scratch
-WORKDIR /
-COPY --from=gobuilder /go/src/static-web/static-web /static-web
-COPY --from=gobuilder /etc/passwd /etc/passwd
-COPY --from=gobuilder /etc/group /etc/group
+COPY --from=base /opt /
+COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
 
-USER appuser
-CMD ["/static-web"]
+STOPSIGNAL SIGTERM
+ENTRYPOINT ["nginx", "-g", "daemon off;"]
