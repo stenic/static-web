@@ -1,3 +1,10 @@
+## [0.1.3](https://github.com/stenic/static-web/compare/v0.1.2...v0.1.3) (2026-04-26)
+
+
+### Bug Fixes
+
+* copy libs from /usr/lib for new nginx alpine layout ([9e965a1](https://github.com/stenic/static-web/commit/9e965a13eaa4833c052739445d71eb803f1e0e1e))
+
 ## [0.1.2](https://github.com/stenic/static-web/compare/v0.1.1...v0.1.2) (2026-04-26)
 
 
