@@ -1,3 +1,10 @@
+## [0.1.2](https://github.com/stenic/static-web/compare/v0.1.1...v0.1.2) (2026-04-26)
+
+
+### Bug Fixes
+
+* create /opt/etc directory before copying timezone file ([0c00d55](https://github.com/stenic/static-web/commit/0c00d5570ac8f70bd4ed3b9ff37e075d0ffa6581))
+
 ## [0.1.1](https://github.com/stenic/static-web/compare/v0.1.0...v0.1.1) (2026-04-24)
 
 
