@@ -20,6 +20,7 @@ RUN mkdir -p /opt/var/cache/nginx && \
     cp -a --parents /lib/ld-musl-* /opt && \
     cp -a --parents /lib/libssl.so.* /opt && \
     cp -a --parents /usr/lib/lib* /opt && \
+    mkdir -p /opt/etc && \
     cp /usr/share/zoneinfo/$TIME_ZONE /opt/etc/localtime
 
 FROM gcr.io/distroless/static:nonroot
