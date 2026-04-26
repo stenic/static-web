@@ -14,11 +14,9 @@ RUN mkdir -p /opt/var/cache/nginx && \
     cp -a --parents /etc/group /opt && \
     cp -a --parents /usr/sbin/nginx /opt && \
     cp -a --parents /usr/sbin/nginx-debug /opt && \
-    cp -a --parents /lib/libcrypto.so.* /opt && \
-    cp -a --parents /lib/libz.* /opt && \
-    cp -a --parents /lib/libc.* /opt && \
-    cp -a --parents /lib/ld-musl-* /opt && \
-    cp -a --parents /lib/libssl.so.* /opt && \
+    mkdir -p /opt/usr/lib && \
+    cp -aL /lib/libc.* /opt/usr/lib/ && \
+    cp -aL /lib/ld-musl-* /opt/usr/lib/ && \
     cp -a --parents /usr/lib/lib* /opt && \
     mkdir -p /opt/etc && \
     cp /usr/share/zoneinfo/$TIME_ZONE /opt/etc/localtime
